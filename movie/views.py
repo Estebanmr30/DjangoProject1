@@ -7,8 +7,12 @@ from .models import Movie
 def home(request):
     # return render(request, 'home.html', {'name':'Esteban Muriel'})
     searchTerm = request.GET.get("searchMovie")
+    if (searchTerm):
+        movies = Movie.objects.filter(title_icontains=searchTerm)
+    else:
+        movies = Movie.objects.all()
 
-    return render(request, 'home.html', {'searchTerm': searchTerm})
+    return render(request, 'home.html', {'searchTerm': searchTerm, "movies":movies})
 
 def about(request):
     return render(request, 'about.html')
